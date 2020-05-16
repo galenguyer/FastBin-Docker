@@ -5,7 +5,7 @@ FROM mcr.microsoft.com/dotnet/core/runtime-deps:3.1-alpine3.11
 ARG version
 
 # install supervisord
-RUN apk --no-cache add supervisor 
+RUN apk add supervisor git
 
 # copy nginx binary
 COPY nginx /usr/sbin/nginx
@@ -23,6 +23,8 @@ RUN mkdir -p /tmp/nginx/{client,proxy} && chown -R www-data:www-data /tmp/nginx/
 	&& touch /run/nginx.pid && chown www-data:www-data /run/nginx.pid\ 
 	&& mkdir -p /etc/nginx \
 	&& mkdir /app
+
+RUN git clone https://github.com/galenguyer/fastbin-web /var/www/html
 
 # copy nginx config
 COPY nginx.conf /etc/nginx/nginx.conf

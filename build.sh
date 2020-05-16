@@ -8,7 +8,7 @@ set -o errexit
 set -o nounset
 
 # first and only argument should be nginx version to build
-version="1.18.0"
+nginx_version="1.18.0"
 
 # set current directory as base directory
 basedir="$(pwd)"
@@ -17,15 +17,15 @@ basedir="$(pwd)"
 docker run -it --rm -v "$basedir"/artifacts:/artifacts mcr.microsoft.com/dotnet/core/sdk:3.1-alpine3.11 /bin/ash -c "`cat ./scripts/build-fastbin-server-docker.sh`"
 
 # build nginx and copy build artifacts to volume mount
-docker run -it --rm -e "NGINX=$version" -v "$basedir"/artifacts:/build alpine:latest /bin/ash -c "`cat ./scripts/build-nginx-docker.sh`"
+docker run -it --rm -e "NGINX=$nginx_version" -v "$basedir"/artifacts:/build alpine:latest /bin/ash -c "`cat ./scripts/build-nginx-docker.sh`"
 
 # copy binaries to image build directory
 rm -rf "$basedir"/image/web
 rm -rf "$basedir"/image/server
-cp "$basedir"/artifacts/nginx-"$version" "$basedir"/image/nginx
+cp "$basedir"/artifacts/nginx-"$nginx_version" "$basedir"/image/nginx
 cp -r "$basedir"/artifacts/server "$basedir"/image/server
-git clone https://github.com/galenguyer/fastbin-web "$basedir"/image/web
+#git clone https://github.com/galenguyer/fastbin-web "$basedir"/image/web
 
 # create docker run image
-docker build --build-arg version="$version" -t fastbin:latest "$basedir"/image/.
+docker build -t fastbin:latest "$basedir"/image/.
 
