@@ -2,16 +2,15 @@
 
 # set up nginx build container
 FROM alpine:latest AS nginx
-ARG NGINX_VER="1.18.0"
-ARG PCRE_VER="8.44"
-ARG CORE_COUNT="1"
 RUN apk add gcc g++ git curl make linux-headers tar gzip
 # download pcre library
 WORKDIR /src/pcre
+ARG PCRE_VER="8.44"
 RUN curl -L -O "https://cfhcable.dl.sourceforge.net/project/pcre/pcre/$PCRE_VER/pcre-$PCRE_VER.tar.gz"
 RUN tar xzf "/src/pcre/pcre-$PCRE_VER.tar.gz"
 # download nginx source
 WORKDIR /src/nginx
+ARG NGINX_VER="1.18.0"
 RUN curl -L -O "http://nginx.org/download/nginx-$NGINX_VER.tar.gz"
 RUN tar xzf "nginx-$NGINX_VER.tar.gz"
 # configure and build nginx
@@ -42,6 +41,7 @@ RUN ./configure --prefix=/usr/share/nginx \
 	--without-mail_imap_module \
 	--without-mail_smtp_module \
 	--with-cc-opt="-Wl,--gc-sections -static -static-libgcc -O2 -ffunction-sections -fdata-sections -fPIE -fstack-protector-all -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security"
+ARG CORE_COUNT="1"
 RUN make -j"$CORE_COUNT"
 RUN make install
 
