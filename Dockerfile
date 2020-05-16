@@ -49,6 +49,7 @@ RUN make install
 # build the API server binaries
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-alpine3.11 AS server
 WORKDIR /src
+ADD https://api.github.com/repos/galenguyer/fastbin-server/git/refs/heads/master version.json
 RUN apk add git
 RUN git clone https://github.com/galenguyer/fastbin-server fastbin
 WORKDIR /src/fastbin/FastBin-Server
@@ -58,6 +59,7 @@ RUN dotnet publish -r linux-musl-x64
 # fetch the latest web files
 FROM alpine:latest AS web
 WORKDIR /src
+ADD https://api.github.com/repos/galenguyer/fastbin-web/git/refs/heads/master version.json
 RUN apk add git
 RUN git clone https://github.com/galenguyer/fastbin-web web
 
