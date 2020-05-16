@@ -18,3 +18,10 @@ docker run -it --rm -v "$basedir"/artifacts:/artifacts mcr.microsoft.com/dotnet/
 
 # build nginx and copy build artifacts to volume mount
 docker run -it --rm -e "NGINX=$version" -v "$basedir"/artifacts:/build alpine:latest /bin/ash -c "`cat ./scripts/build-nginx-docker.sh`"
+
+# copy binaries to image build directory
+cp "$basedir"/artifacts/nginx-"$version" "$basedir"/image/nginx
+cp -r "$basedir"/artifacts/server "$basedir"/image/server
+
+# create docker run image
+docker build --build-arg version="$version" -t fastbin:latest "$basedir"/image/.
