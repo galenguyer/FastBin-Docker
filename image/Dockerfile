@@ -1,5 +1,5 @@
 # use latest alpine as base
-FROM alpine:latest
+FROM mcr.microsoft.com/dotnet/core/runtime-deps:3.1-alpine3.11
 
 # determine nginx version to use
 ARG version
@@ -34,5 +34,7 @@ COPY server /app
 # expose nginx port
 EXPOSE 80
 
-# run nginx in supervisord
+# set this or we get permission errors with dotnet
+WORKDIR /app
+# run nginx and fastbin-server in supervisord
 ENTRYPOINT ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
