@@ -37,13 +37,9 @@ curl -L -O "http://nginx.org/download/nginx-$NGINX.tar.gz"
 tar xzf "nginx-$NGINX.tar.gz"
 cd "$BUILDROOT/nginx/nginx-$NGINX"
 
-# fetch the fancy-index module
-git clone https://github.com/aperezdc/ngx-fancyindex.git "$BUILDROOT"/ngx-fancyindex
-
 # configure the nginx source to include our added modules
 # and to use our newly built openssl library
 ./configure --prefix=/usr/share/nginx \
-	--add-module="$BUILDROOT"/ngx-fancyindex \
 	--sbin-path=/usr/sbin/nginx \
 	--conf-path=/etc/nginx/nginx.conf \
 	--error-log-path=/var/log/nginx/error.log \
