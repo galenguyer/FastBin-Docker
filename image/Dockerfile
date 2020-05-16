@@ -24,6 +24,7 @@ RUN mkdir -p /tmp/nginx/{client,proxy} && chown -R www-data:www-data /tmp/nginx/
 	&& mkdir -p /etc/nginx \
 	&& mkdir /app
 
+# add files for web
 RUN git clone https://github.com/galenguyer/fastbin-web /var/www/html
 
 # copy nginx config
@@ -31,7 +32,6 @@ COPY nginx.conf /etc/nginx/nginx.conf
 COPY mime.types /etc/nginx/mime.types
 
 # copy web files
-COPY web /var/www/html
 COPY server /app
 
 # expose nginx port
