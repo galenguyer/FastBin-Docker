@@ -17,12 +17,12 @@ COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 RUN adduser www-data -D -H
 
 # create necessary directories and files
-RUN mkdir -p /tmp/nginx/{client,proxy} && chown -R www-data:www-data /tmp/nginx/
-RUN mkdir -p /var/log/nginx && chown -R www-data:www-data /var/log/nginx
-RUN mkdir -p /var/www/html && chown -R www-data:www-data /var/www/html
-RUN touch /run/nginx.pid && chown www-data:www-data /run/nginx.pid
-RUN mkdir -p /etc/nginx
-RUN mkdir /app
+RUN mkdir -p /tmp/nginx/{client,proxy} && chown -R www-data:www-data /tmp/nginx/ \
+	&& mkdir -p /var/log/nginx && chown -R www-data:www-data /var/log/nginx \
+	&& mkdir -p /var/www/html && chown -R www-data:www-data /var/www/html \
+	&& touch /run/nginx.pid && chown www-data:www-data /run/nginx.pid\ 
+	&& mkdir -p /etc/nginx \
+	&& mkdir /app
 
 # copy nginx config
 COPY nginx.conf /etc/nginx/nginx.conf
