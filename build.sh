@@ -22,7 +22,7 @@ docker run -it --rm -e "NGINX=$version" -v "$basedir"/artifacts:/build alpine:la
 # copy binaries to image build directory
 cp "$basedir"/artifacts/nginx-"$version" "$basedir"/image/nginx
 cp -r "$basedir"/artifacts/server "$basedir"/image/server
-git clone https://github.com/galenguyer/fastbin-web "$basedir"/images/web
+git clone https://github.com/galenguyer/fastbin-web "$basedir"/image/web
 
 # create docker run image
 docker build --build-arg version="$version" -t fastbin:latest "$basedir"/image/.

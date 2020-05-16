@@ -23,4 +23,6 @@ git clone https://github.com/galenguyer/fastbin-server $BUILDROOT
 cd "$BUILDROOT"/FastBin-Server
 dotnet restore
 dotnet publish -r linux-x64
+
+rm -rf /artifacts/server
 mv ./bin/Debug/netcoreapp3.1/linux-x64/publish /artifacts/server
