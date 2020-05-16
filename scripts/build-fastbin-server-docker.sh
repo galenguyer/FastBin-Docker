@@ -10,12 +10,16 @@ function cleanup {
 }
 trap cleanup EXIT
 
+# install dependencies
 apk add git
 
+# Clone sources
 git clone https://github.com/galenguyer/fastbin-server $BUILDROOT
 cd "$BUILDROOT"/FastBin-Server
+
+# build for alpine linux
 dotnet restore
 dotnet publish -r linux-musl-x64
 
-rm -rf /artifacts/server
+# Move build to host folder
 mv ./bin/Debug/netcoreapp3.1/linux-musl-x64/publish /artifacts/server
