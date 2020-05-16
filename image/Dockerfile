@@ -26,6 +26,7 @@ RUN mkdir /app
 
 # copy nginx config
 COPY nginx.conf /etc/nginx/nginx.conf
+COPY mime.types /etc/nginx/mime.types
 
 # copy web files
 COPY web /var/www/html
