@@ -19,9 +19,6 @@ function cleanup {
 }
 trap cleanup EXIT
 
-apt update -y
-apt install git -y
-
 git clone https://github.com/galenguyer/fastbin-server $BUILDROOT
 cd "$BUILDROOT"/FastBin-Server
 dotnet restore
