@@ -19,11 +19,15 @@ RUN adduser www-data -D -H
 # create necessary directories and files
 RUN mkdir -p /tmp/nginx/{client,proxy} && chown -R www-data:www-data /tmp/nginx/
 RUN mkdir -p /var/log/nginx && chown -R www-data:www-data /var/log/nginx
+RUN mkdir -p /var/www/html && chown -R www-data:www-data /var/www/html
 RUN touch /run/nginx.pid && chown www-data:www-data /run/nginx.pid
 RUN mkdir -p /etc/nginx
 
 # copy nginx config
 COPY nginx.conf /etc/nginx/nginx.conf
+
+# copy web files
+COPY web /var/www/html
 
 # expose nginx port
 EXPOSE 80
