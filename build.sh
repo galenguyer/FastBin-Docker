@@ -20,6 +20,8 @@ docker run -it --rm -v "$basedir"/artifacts:/artifacts mcr.microsoft.com/dotnet/
 docker run -it --rm -e "NGINX=$version" -v "$basedir"/artifacts:/build alpine:latest /bin/ash -c "`cat ./scripts/build-nginx-docker.sh`"
 
 # copy binaries to image build directory
+rm -rf "$basedir"/image/web
+rm -rf "$basedir"/image/server
 cp "$basedir"/artifacts/nginx-"$version" "$basedir"/image/nginx
 cp -r "$basedir"/artifacts/server "$basedir"/image/server
 git clone https://github.com/galenguyer/fastbin-web "$basedir"/image/web
