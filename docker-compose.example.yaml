@@ -1,0 +1,15 @@
+version: "3.7"
+
+services:
+  fastbin:
+    image: fastbin:latest
+    container_name: fastbin
+    restart: always
+    volumes:
+      - type: volume
+        source: fastbin
+        target: /app/files
+
+volumes:
+  fastbin:
+
